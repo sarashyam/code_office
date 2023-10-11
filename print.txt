@@ -1,0 +1,5 @@
+Private Sub CmdPrint_Click()
+
+Call Printpdf
+
+End Sub

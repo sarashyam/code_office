@@ -1,0 +1,42 @@
+Private Sub CommandButton1_Click()
+    TextBox3.Value = Val(TextBox1.Value) + Val(TextBox2.Value)
+End Sub
+
+Private Sub CommandButton2_Click()
+    TextBox3.Value = Val(TextBox1.Value) - Val(TextBox2.Value)
+End Sub
+
+
+
+Private Sub CommandButton3_Click()
+
+    TextBox3.Value = Val(TextBox1.Value) * Val(TextBox2.Value)
+    
+End Sub
+
+Private Sub CommandButton4_Click()
+On Error GoTo abc
+    TextBox3.Value = Val(TextBox1.Value) / Val(TextBox2.Value)
+    
+Done:
+    Exit Sub
+
+abc:
+    MsgBox "Cannot divide by zero", vbExclamation, "Division Error"
+    TextBox3.Value = "Invalid"
+    
+
+End Sub
+
+Private Sub CommandButton5_Click()
+Unload UserForm1
+
+End Sub
+
+Private Sub Label2_Click()
+
+End Sub
+
+Private Sub UserForm_Click()
+
+End Sub

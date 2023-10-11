@@ -1,0 +1,57 @@
+
+'--------------------------- to send the data automatically at particular time everyday------------
+Sub ScheduleAction()
+    Dim targetTime As Date
+    targetTime = Date + TimeValue("10:17:00") ' Set the desired time here (e.g., 9:00 AM)
+    Application.OnTime targetTime, "SendBirthdayEmails"
+End Sub
+' ----------------------------------- to send the mail with the attachment and the subject---------------------
+
+Sub SendBirthdayEmails()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim today As Date
+    Dim name As String
+    Dim email As String
+    Dim dob As Date
+    Dim subject As String
+    Dim message As String
+    Dim outlookApp As Object
+    Dim outlookMail As Object
+    
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Replace "Sheet1" with the actual sheet name
+    
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    today = Date
+    
+    Set outlookApp = CreateObject("Outlook.Application")
+    
+    For i = 2 To lastRow ' Assuming data starts from row 2
+        name = ws.Cells(i, 1).Value
+        email = ws.Cells(i, 2).Value
+        dob = ws.Cells(i, 3).Value
+        attachmentPath = ws.Cells(i, 4).Value
+        
+        If Month(dob) = Month(today) And Day(dob) = Day(today) Then
+            subject = "Happy Birthday, " & name & "!"
+            message = "Dear " & name & "," & vbNewLine & vbNewLine & _
+                "Wishing you a very happy birthday!" & vbNewLine & vbNewLine & _
+                "Best regards," & vbNewLine & " PARADIGM family"
+            
+            Set outlookMail = outlookApp.CreateItem(0)
+            With outlookMail
+                .To = email
+                .subject = subject
+                .Body = message
+                .Attachments.Add attachmentPath ' Attach the picture
+                .Send
+            End With
+            
+            Set outlookMail = Nothing
+        End If
+    Next i
+    
+    Set outlookApp = Nothing
+End Sub
+
+

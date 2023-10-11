@@ -1,0 +1,183 @@
+Option Explicit
+Dim firstnum As Double
+Dim secondnum As Double
+Dim answer As Double
+Dim operator As String
+
+
+Private Sub CommandButton0_Click()
+' 0 button
+   If TextBox1.Text = "0" Then
+   TextBox1.Text = "0"
+   Else
+   TextBox1.Text = TextBox1.Text + "0"
+   End If
+End Sub
+
+
+Private Sub CommandButton1_Click()
+' 1 button
+   If TextBox1.Text = "1" Then
+   TextBox1.Text = "1"
+   Else
+   TextBox1.Text = TextBox1.Text + "1"
+   End If
+End Sub
+
+Private Sub CommandButton2_Click()
+' 2 button
+   If TextBox1.Text = "2" Then
+   TextBox1.Text = "2"
+   Else
+   TextBox1.Text = TextBox1.Text + "2"
+   End If
+End Sub
+
+Private Sub CommandButton3_Click()
+' 3 button
+   If TextBox1.Text = "3" Then
+   TextBox1.Text = "3"
+   Else
+   TextBox1.Text = TextBox1.Text + "3"
+   End If
+End Sub
+
+Private Sub CommandButton4_Click()
+' 4 button
+   If TextBox1.Text = "4" Then
+   TextBox1.Text = "4"
+   Else
+   TextBox1.Text = TextBox1.Text + "4"
+   End If
+End Sub
+
+Private Sub CommandButton5_Click()
+' 5 button
+   If TextBox1.Text = "5" Then
+   TextBox1.Text = "5"
+   Else
+   TextBox1.Text = TextBox1.Text + "5"
+   End If
+End Sub
+
+Private Sub CommandButton6_Click()
+' 6 button
+   If TextBox1.Text = "6" Then
+   TextBox1.Text = "6"
+   Else
+   TextBox1.Text = TextBox1.Text + "6"
+   End If
+End Sub
+
+Private Sub CommandButton7_Click()
+' 7 button
+   If TextBox1.Text = "7" Then
+   TextBox1.Text = "7"
+   Else
+   TextBox1.Text = TextBox1.Text + "7"
+   End If
+End Sub
+
+Private Sub CommandButton8_Click()
+' 8 button
+   If TextBox1.Text = "8" Then
+   TextBox1.Text = "8"
+   Else
+   TextBox1.Text = TextBox1.Text + "8"
+   End If
+End Sub
+
+
+Private Sub CommandButton9_Click()
+' 9 button
+   If TextBox1.Text = "9" Then
+   TextBox1.Text = "9"
+   Else
+   TextBox1.Text = TextBox1.Text + "9"
+   End If
+End Sub
+
+Private Sub CommandButton00_Click()
+' 00 button
+   If TextBox1.Text = "00" Then
+   TextBox1.Text = "00"
+   Else
+   TextBox1.Text = TextBox1.Text + "00"
+   End If
+End Sub
+
+
+Private Sub CommandButtonADD_Click()
+    firstnum = TextBox1.Text
+    TextBox1.Text = ""
+    operator = "+"
+End Sub
+
+Private Sub CommandButtonC_Click()
+  TextBox1.Text = ""
+End Sub
+
+Private Sub CommandButtonDIFF_Click()
+    firstnum = TextBox1.Text
+    TextBox1.Text = ""
+    operator = "-"
+End Sub
+
+Private Sub CommandButtonDIVIDE_Click()
+    
+        firstnum = TextBox1.Text
+        TextBox1.Text = ""
+        operator = "/"
+    
+End Sub
+
+Private Sub CommandButtonEQUAL_Click()
+    secondnum = TextBox1.Text
+    If operator = "+" Then
+    answer = firstnum + secondnum
+    TextBox1.Text = answer
+    
+    ElseIf operator = "-" Then
+    answer = firstnum - secondnum
+    TextBox1.Text = answer
+    
+    ElseIf operator = "*" Then
+    answer = firstnum * secondnum
+    TextBox1.Text = answer
+    
+    ElseIf operator = "/" Then
+    On Error GoTo abc
+    answer = firstnum / secondnum
+    TextBox1.Text = answer
+    
+
+    ElseIf operator = "%" Then
+    answer = firstnum Mod secondnum
+    TextBox1.Text = answer
+    End If
+Done:
+       Exit Sub
+        
+abc:
+        MsgBox "Cannot divide by zero", vbExclamation, "Division Error"
+        TextBox1.Value = "Invalid"
+    
+End Sub
+
+Private Sub CommandButtonMUL_Click()
+    firstnum = TextBox1.Text
+    TextBox1.Text = ""
+    operator = "*"
+End Sub
+
+Private Sub CommandButtonPERCENTAGE_Click()
+    firstnum = TextBox1.Text
+    TextBox1.Text = ""
+    operator = "%"
+End Sub
+
+Private Sub CommandButtonPOINT_Click()
+    If InStr(TextBox1.Text, ".") = "0" Then
+    TextBox1.Text = TextBox1.Text + "."
+    End If
+End Sub
