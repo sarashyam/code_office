@@ -1,0 +1,42 @@
+
+------------------ to insert value at the end of sheet-----------------------
+
+Private Sub cmdcombPESD_Click()
+    Dim ws As Worksheet
+    Dim destinationSheet As Worksheet
+    Dim lastRow As Long
+    Dim lastColumn As Long
+    Dim lastColumnd As Long
+    Dim rangeToCopy As Range
+    Dim destinationRange As Range
+    
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Worksheets("PESD")
+    Set destinationSheet = ThisWorkbook.Worksheets("Combined")
+    
+    ' Find the last row in column H
+    lastRow = ws.Cells(Rows.Count, "G").End(xlUp).Row
+    MsgBox (lastRow)
+    
+    
+    ' Find the last column in the row
+    lastColumn = ws.Cells(2, Columns.Count).End(xlToLeft).Column
+    MsgBox (lastColumn)
+    
+    lastColumnd = destinationSheet.Cells(2, Columns.Count).End(xlToLeft).Column
+     MsgBox (lastColumnd)
+    'Set destinationRange = destinationSheet.Cells(Rows.Count, lastColumnd + 1).End(xlUp).Offset(1, 0)
+    'Set destinationRange = destinationSheet.Cells(destinationSheet.Rows.Count, lastColumnd).End(xlUp).Offset(1, 0)
+    Set destinationRange = destinationSheet.Cells(1, lastColumnd + 1)
+
+    
+    ' Select and copy the range from H1 to the last row and last column
+    Set rangeToCopy = ws.Range("H1", ws.Cells(lastRow, lastColumn))
+    rangeToCopy.Copy
+    'destinationRange.PasteSpecial Paste:=xlPasteValues
+     'destinationRange.Value = SourceRange.Value
+     Sheets("Combined").Activate
+     Sheets("Combined").Cells(1, lastColumnd + 1).Select
+     ActiveSheet.Paste
+    Application.CutCopyMode = False
+End Sub
