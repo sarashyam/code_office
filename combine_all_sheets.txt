@@ -1,0 +1,111 @@
+Private Sub combineAll_Click()
+    Dim ws As Worksheet
+    Dim destinationSheet As Worksheet
+    Dim lastRow As Long
+    Dim lastColumn As Long
+    Dim lastColumnd As Long
+    Dim rangeToCopy As Range
+    Dim destinationRange As Range
+    Dim tableRangeDest As Range
+    Dim lastColumndest As Long
+    
+    ' Set the worksheet
+    'Set ws = ThisWorkbook.Worksheets("PESD")
+    Set destinationSheet = ThisWorkbook.Worksheets("Combined")
+     For Each ws In ThisWorkbook.Worksheets
+        If ws.Index <> ThisWorkbook.Worksheets.Count Then
+        ' Find the last row in column H
+        lastRow = ws.Cells(Rows.Count, "G").End(xlUp).Row
+        MsgBox "no of rows in source" & lastRow & ws.Name
+        
+        
+        ' Find the last column in the row
+        lastColumn = ws.Cells(2, Columns.Count).End(xlToLeft).Column
+        MsgBox "no of columns in " & lastColumn & ws.Name
+        
+        Set tableRangeDest = destinationSheet.UsedRange
+        
+        lastColumndest = tableRangeDest.Find("*", searchorder:=xlByColumns, searchdirection:=xlPrevious).Column
+        'lastColumnd = destinationSheet.Cells(4, Columns.Count).End(xlToLeft).Column
+         MsgBox "no of columns in " & lastColumndest
+         'MsgBox (lastColumndest)
+        'Set destinationRange = destinationSheet.Cells(Rows.Count, lastColumnd + 1).End(xlUp).Offset(1, 0)
+        'Set destinationRange = destinationSheet.Cells(destinationSheet.Rows.Count, lastColumnd).End(xlUp).Offset(1, 0)
+        'Set destinationRange = destinationSheet.Cells(1, lastColumnd + 1)
+    
+        
+        ' Select and copy the range from H1 to the last row and last column
+        Set rangeToCopy = ws.Range("H1", ws.Cells(lastRow, lastColumn))
+        rangeToCopy.Copy
+        'destinationRange.PasteSpecial Paste:=xlPasteValues
+         'destinationRange.Value = SourceRange.Value
+         Sheets("Combined").Activate
+         Sheets("Combined").Cells(1, lastColumndest + 2).Select
+         ActiveSheet.Paste
+        Application.CutCopyMode = False
+        End If
+        
+        Next ws
+        
+        
+End Sub
+
+
+
+--------------------------------------------------------------------------
+
+Private Sub combineAll_Click()
+    Dim ws As Worksheet
+    Dim destinationSheet As Worksheet
+    Dim lastRow As Long
+    Dim lastColumn As Long
+    Dim lastColumnd As Long
+    Dim rangeToCopy As Range
+    Dim destinationRange As Range
+    Dim tableRangeDest As Range
+    Dim lastColumndest As Long
+    'Dim columnCount As Long
+    ' Set the worksheet
+    'Set ws = ThisWorkbook.Worksheets("PESD")
+    Set destinationSheet = ThisWorkbook.Worksheets("Combined")
+     For Each ws In ThisWorkbook.Worksheets
+        If ws.Index <> ThisWorkbook.Worksheets.Count Then
+        ' Find the last row in column H
+        lastRow = ws.Cells(Rows.Count, "G").End(xlUp).Row
+        MsgBox "no of rows in source" & lastRow & ws.Name
+        
+        
+        ' Find the last column in the row
+        lastColumn = ws.Cells(2, Columns.Count).End(xlToLeft).Column
+        MsgBox "no of columns in " & lastColumn & ws.Name
+        
+        '______________
+        columnCount = destinationSheet.UsedRange.Columns.Count
+        
+        Set tableRangeDest = destinationSheet.UsedRange
+        
+        lastColumndest = tableRangeDest.Find("*", searchorder:=xlByColumns, searchdirection:=xlPrevious).Column
+        'lastColumnd = destinationSheet.Cells(4, Columns.Count).End(xlToLeft).Column
+         MsgBox "no of columns in combine " & lastColumndest
+         'MsgBox "no of columns in  dest trial " & columnCount
+         'MsgBox (lastColumndest)
+        'Set destinationRange = destinationSheet.Cells(Rows.Count, lastColumnd + 1).End(xlUp).Offset(1, 0)
+        'Set destinationRange = destinationSheet.Cells(destinationSheet.Rows.Count, lastColumnd).End(xlUp).Offset(1, 0)
+        'Set destinationRange = destinationSheet.Cells(1, lastColumnd + 1)
+    
+        
+        ' Select and copy the range from H1 to the last row and last column
+        Set rangeToCopy = ws.Range("H1", ws.Cells(lastRow, lastColumn))
+        rangeToCopy.Copy
+        'destinationRange.PasteSpecial Paste:=xlPasteValues
+         'destinationRange.Value = SourceRange.Value
+         Sheets("Combined").Activate
+         Sheets("Combined").Cells(1, lastColumndest + 1).Select
+         ActiveSheet.Paste
+        Application.CutCopyMode = False
+        End If
+        
+        Next ws
+        
+        
+End Sub
