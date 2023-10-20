@@ -18,16 +18,17 @@ def extract_oval_annotations(pdf_path):
             #print(annotation.type)
             typ = annotation.type
             #print(annotation.colors)
-            print(annotation.rect.y1)
+            # print(annotation.rect)   to print the x0 yo x1 y1 coordinates where it is located
+            print(annotation.rect.y1) # to print y1 coordinates
             #print(annotation.author)
             
 
 
-            if "Circle" in typ:     # typ == c:
+            if "Circle" in typ:     # typ == c: to check if circle 5 is present in annotation type tuple
                 c_count+=1
                 #print(f"Oval annotation found on page {annotation.page_number} at ({annotation.x}, {annotation.y})")
 
-            if 2 in typ:            #typ == t:
+            if 2 in typ:            #typ == t:  to check if freetext 2 is present in annotation type tuple
                 t_count+=1
 
             # if annotation.subtype == '/Circle':
@@ -43,7 +44,7 @@ def extract_oval_annotations(pdf_path):
     #return oval_annotations
 
 # Usage example
-pdf_path = 'C:/Users/user105/Documents/pandas_learning/find_textboxes.pdf'
+pdf_path = 'C:/Users/user105/Documents/pandas_learning/find_textboxes.pdf' # path of the pdf file
 oval_annotations = extract_oval_annotations(pdf_path)
 
 # for annotation in oval_annotations:
