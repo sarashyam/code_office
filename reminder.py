@@ -1,3 +1,6 @@
+
+ #  ------ This is a code that will remind you , but we have to give it in terminal and the output will be also in terminal
+
 # import time
 # print("What shall I remind you about?")
 # text = str(input())
@@ -8,7 +11,7 @@
 # print(text)
 
 
-#======================================
+#==================  to give a notifier when the time comes    ====================
 
 # from win10toast import ToastNotifier
 # import time
@@ -25,7 +28,9 @@
 # time.sleep(local_time)
 
 # toaster.show_toast("Reminder", text, duration=10)
-#---------------------
+
+
+#--------- it directs you to a particular link when time hits       ------------
 
 # import datetime
 # import time
@@ -56,7 +61,7 @@
 #     # Sleep for 1 second before checking the time again
 #     time.sleep(1)
 
-#--------------------------------
+#------------ it displays random quotes  --------------------
 import random
 import time
 from plyer import notification
@@ -79,7 +84,7 @@ def display_quote():
         timeout=10
     )
 
-# Set the specific time for the quote reminder (24-hour format)
+# Set the specific time for the quote reminder (24-hour format)   #  when specific time hits
 #quote_time = "09:23:00"
 
 # while True:
@@ -95,7 +100,7 @@ def display_quote():
 #     time.sleep(1)
 interval_time = 30 * 60  # 30 minutes
 
-while True:
+while True: # reminds in every 30 minutes
     display_quote()
     time.sleep(interval_time)
 

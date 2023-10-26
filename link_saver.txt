@@ -1,0 +1,54 @@
+' This is a VBA code that saves the link by creating a folder with current date, link info, and employee code and inside it, it creates a txt file which will insert the link 
+
+Private Sub SAVE_LINK_Click()
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim cell As Range
+    Dim folderPath As String
+    Dim folderName As String
+    Dim filePath As String
+    Dim fileNumber As Integer
+    Dim inputString As String
+    Dim lastSlashIndex As Integer
+    
+    Set ws = ThisWorkbook.Worksheets("Sheet3") ' actual sheet name
+    
+    Set rng = ws.Range("A2:A" & ws.Cells(ws.Rows.Count, "A").End(xlUp).Row) ' Assuming data is in column A starting from row 2
+    
+    For Each cell In rng
+        'folderPath = cell.Value ' Get the folder path from column A
+        
+        inputString = cell.Value
+        ' to remove the last values after last slash
+        lastSlashIndex = InStrRev(inputString, "\") ' it finds the slash from end of the String and stores the index 
+        folderPath = Left(inputString, lastSlashIndex - 1) 'data is separated from the left side of string  untill the index is found
+        
+        
+        
+        ' Check if the folder path is not empty
+        If folderPath <> "" Then
+            folderName = Format(Date, "yyyy-mm-dd") & "_" & cell.Offset(0, 1).Value & "_" & cell.Offset(0, 3).Value ' Create folder name with current date and name code from adjacent column
+            
+            ' Create the folder if it doesn't exist
+            If Dir(folderPath & "\" & folderName, vbDirectory) = "" Then
+                MkDir folderPath & "\" & folderName
+                MsgBox folderName & " has been created"
+            End If
+            
+            filePath = folderPath & "\" & folderName & "\" & folderName & ".txt" ' Create file path
+            
+            fileNumber = FreeFile ' Get the next available file number
+            
+            ' Open the text file for writing (overwrite existing content)
+            Open filePath For Output As fileNumber
+            
+            ' Write the data from column C to the text file
+            Print #fileNumber, cell.Offset(0, 2).Value
+            MsgBox "LINK ADDED TO " & folderName
+            
+            ' Close the text file
+            Close fileNumber
+        End If
+    Next cell
+
+End Sub
