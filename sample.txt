@@ -1,0 +1,7 @@
+oval count  = 3   textbox count  = 10 
+ Oval (125, 158, 192) appears 1 times.
+ Oval purple appears 2 times.
+Textbox white appears 1 times.
+Textbox (0, 64, 64) appears 2 times.
+ Textbox pink appears 3 times.
+Textbox yellow appears 2 times.

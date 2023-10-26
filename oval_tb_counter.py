@@ -16,11 +16,20 @@ def print_count(pdf_path,fname):
         page = doc[page_num]
         for annotation in page.annots():
             typ = annotation.type
+<<<<<<< HEAD
+=======
+            #print(annotation.colors)
+            # print(annotation.rect)   to print the x0 yo x1 y1 coordinates where it is located
+            print(annotation.rect.y1) # to print y1 coordinates
+            #print(annotation.author)
+            
 
-            if "Circle" in typ:     # typ == c:
+>>>>>>> 0952743799ed21bc060ee215418d02d0e7200d39
+
+            if "Circle" in typ:     # typ == c: to check if circle 5 is present in annotation type tuple
                 c_count+=1
 
-            if 2 in typ:            #typ == t:
+            if 2 in typ:            #typ == t:  to check if freetext 2 is present in annotation type tuple
                 t_count+=1
 
     with open(fname, "a") as file:
@@ -148,6 +157,7 @@ def extract_oval_annotations(pdf_path,fname):
     #return oval_annotations
 
 # Usage example
+<<<<<<< HEAD
 pdf_path = 'C:/Users/user105/Documents/pandas_learning/sample.pdf'
 
 fname = os.path.basename(pdf_path)
@@ -167,6 +177,10 @@ while True:
         oval_annotations = extract_oval_annotations(pdf_path,fname)
     else:
           exit()
+=======
+pdf_path = 'C:/Users/user105/Documents/pandas_learning/find_textboxes.pdf' # path of the pdf file
+oval_annotations = extract_oval_annotations(pdf_path)
+>>>>>>> 0952743799ed21bc060ee215418d02d0e7200d39
 
 # for annotation in oval_annotations:
 #     # Handle oval annotations as needed
