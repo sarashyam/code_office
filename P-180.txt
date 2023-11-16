@@ -1,0 +1,8 @@
+System Name: P-180
+System Manufacturer: Dell Inc.
+System Model: Latitude 3520
+User: Admin
+Moniter Brand: DEL 0
+Moniter Size: DELL E2421HN0
+Moniter Brand: CNM 1
+Moniter Size: DELL E2421HN1
