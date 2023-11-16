@@ -1,0 +1,121 @@
+' 15-11-2023 SAS added feature to include system name, model, manufacture and user in sheet
+' 16-11-2023 SAS added feature to insert multiple moniter's size and brand in sheet
+
+Private Sub CommandButton1_Click()
+
+    ' -------Set the path to the folder containing the text files
+    Dim folderPath As String
+    folderPath = "C:\Users\user105\Desktop\uday_kumar" ' Replace with the actual path to your folder
+
+    ' ----------- Set up Excel worksheet
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Replace with the actual sheet name
+
+    ' -----------Find the last used row in column A
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row + 1
+
+    ' ---------Process each text file in the folder
+    Dim fileName As String
+    fileName = Dir(folderPath & "\*.txt") ' Get the first file in the folder
+
+    Do While fileName <> ""
+        ' -----------Process the current text file
+        ProcessTextFile folderPath & "\" & fileName, ws, lastRow
+
+        ' ---------Get the next file in the folder
+        fileName = Dir
+    Loop
+
+
+End Sub
+
+
+
+Sub ProcessTextFile(filePath As String, ws As Worksheet, lastRow As Long)
+    '--------- Open the text file for reading---------------
+    Dim fileNumber As Integer
+    fileNumber = FreeFile
+    Open filePath For Input As fileNumber
+    '-------------------------------------------
+    
+    
+    ' -------------------Variables to store extracted information
+    Dim systemName As String
+    Dim systemManufacturer As String
+    Dim systemModel As String
+    Dim user As String
+    Dim monitorBrand1 As String
+    Dim monitorSize1 As String
+    Dim monitorBrand2 As String
+    Dim monitorSize2 As String
+    Dim monitorCountb As Integer
+    Dim monitorCounts As Integer
+    
+    monitorCountb = 0 ' to count moniter brand
+    monitorCounts = 0   ' to count moniter size
+    '--------------------------------------------------
+    
+    
+    
+
+    ' ------------------------------ Read each line of the text file -----------------------------------
+    Do Until EOF(fileNumber)
+        Dim line As String
+        Line Input #fileNumber, line
+
+        ' -----------------------Check for the specific lines containing information-------------------------------
+        If InStr(line, "System Name:") > 0 Then   '---------------------- [if block 1
+            systemName = Trim(Mid(line, InStr(line, ":") + 1))
+            
+        ElseIf InStr(line, "System Manufacturer:") > 0 Then
+            systemManufacturer = Trim(Mid(line, InStr(line, ":") + 1))
+            
+        ElseIf InStr(line, "System Model:") > 0 Then
+            systemModel = Trim(Mid(line, InStr(line, ":") + 1))
+            
+        ElseIf InStr(line, "User:") > 0 Then
+            user = Trim(Mid(line, InStr(line, ":") + 1))
+
+        End If  '-------------------------------------------------- ending of if block 1]
+        
+        If InStr(line, "Moniter Brand:") > 0 Then '--------------- [if block2 for moniter brand
+            If monitorCountb = 0 Then
+                monitorBrand1 = Trim(Mid(line, InStr(line, ":") + 1))
+                monitorCountb = 1  ' changing to 1 so as it can access the next moniter
+            Else
+                monitorBrand2 = Trim(Mid(line, InStr(line, ":") + 1))
+            
+            End If
+        End If '----------------------------------------------------- ending of if block 2]
+        
+         If InStr(line, "Moniter Size:") > 0 Then   '--------------- [if block3 for moniter brand
+            If monitorCounts = 0 Then
+                monitorSize1 = Trim(Mid(line, InStr(line, ":") + 1))
+                monitorCounts = 1  ' changing to 1 so as it can access the next moniter
+            Else
+                monitorSize2 = Trim(Mid(line, InStr(line, ":") + 1))
+            
+            End If
+        End If '----------------------------------------------------- ending of if block 3]
+        
+    Loop
+    '----------------------------------------------------------------
+
+    ' -----------------Close the text file ------------------
+    Close fileNumber
+    '---------------------------------------------------------
+    
+    ' ------------------   Enter data in the next available row ------------
+    ws.Cells(lastRow, 1).value = systemName
+    ws.Cells(lastRow, 2).value = systemManufacturer
+    ws.Cells(lastRow, 3).value = systemModel
+    ws.Cells(lastRow, 4).value = user
+    ws.Cells(lastRow, 5).value = monitorBrand1
+    ws.Cells(lastRow, 6).value = monitorSize1
+    ws.Cells(lastRow, 7).value = monitorBrand2
+    ws.Cells(lastRow, 8).value = monitorSize2
+    '-------------------------------------------------------------------------
+    ' -------------------Increment the lastRow for the next file -------------------
+    lastRow = lastRow + 1
+End Sub
