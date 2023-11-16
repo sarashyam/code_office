@@ -1,0 +1,188 @@
+' 15-11-2023 SAS added feature to include system name, model, manufacture and user in sheet
+' 16-11-2023 SAS added feature to insert multiple moniter's size and brand in sheet
+
+Private Sub CommandButton1_Click()
+
+'Sub ProcessTextFilesAndFillExcel()
+    ' Set the path to the folder containing the text files
+    Dim folderPath As String
+    folderPath = "C:\Users\user105\Desktop\uday_kumar" ' Replace with the actual path to your folder
+
+    ' Set up Excel worksheet
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Replace with the actual sheet name
+
+    ' Find the last used row in column A
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row + 1
+
+    ' Process each text file in the folder
+    Dim fileName As String
+    fileName = Dir(folderPath & "\*.txt") ' Get the first file in the folder
+
+    Do While fileName <> ""
+        ' Process the current text file
+        ProcessTextFile folderPath & "\" & fileName, ws, lastRow
+
+        ' Get the next file in the folder
+        fileName = Dir
+    Loop
+'End Sub
+
+
+End Sub
+
+
+
+Sub ProcessTextFile(filePath As String, ws As Worksheet, lastRow As Long)
+    ' Open the text file for reading
+    Dim fileNumber As Integer
+    fileNumber = FreeFile
+    Open filePath For Input As fileNumber
+
+    ' Variables to store extracted information
+    Dim systemName As String
+    Dim systemManufacturer As String
+    Dim systemModel As String
+    Dim user As String
+    Dim monitorBrand1 As String
+    Dim monitorSize1 As String
+    Dim monitorBrand2 As String
+    Dim monitorSize2 As String
+    Dim isSecondMonitor As Boolean
+    Dim monitorCountb As Integer
+    Dim monitorCounts As Integer
+    
+    monitorCountb = 0
+    monitorCounts = 0
+    
+
+    ' Read each line of the text file
+    Do Until EOF(fileNumber)
+        Dim line As String
+        Line Input #fileNumber, line
+
+        ' Check for the specific lines containing information
+        If InStr(line, "System Name:") > 0 Then
+            systemName = Trim(Mid(line, InStr(line, ":") + 1))
+        ElseIf InStr(line, "System Manufacturer:") > 0 Then
+            systemManufacturer = Trim(Mid(line, InStr(line, ":") + 1))
+        ElseIf InStr(line, "System Model:") > 0 Then
+            systemModel = Trim(Mid(line, InStr(line, ":") + 1))
+        ElseIf InStr(line, "User:") > 0 Then
+            user = Trim(Mid(line, InStr(line, ":") + 1))
+
+        End If
+'       If InStr(line, "Moniter Size:") > 0 Then
+'            If monitorCounts = 0 Then
+'                monitorSize1 = Trim(Mid(line, InStr(line, ":") + 1))
+'                monitorCounts = 1
+'            End If
+'        End If
+'
+'       If InStr(line, "Moniter Size:") > 0 Then
+'            If monitorCounts = 1 Then
+'                monitorSize2 = Trim(Mid(line, InStr(line, ":") + 1))
+'                monitorCounts = 0
+'            End If
+'        End If
+        
+        If InStr(line, "Moniter Brand:") > 0 Then
+            If monitorCountb = 0 Then
+                monitorBrand1 = Trim(Mid(line, InStr(line, ":") + 1))
+                monitorCountb = 1
+            Else
+                monitorBrand2 = Trim(Mid(line, InStr(line, ":") + 1))
+            
+            End If
+        End If
+        
+         If InStr(line, "Moniter Size:") > 0 Then
+            If monitorCounts = 0 Then
+                monitorSize1 = Trim(Mid(line, InStr(line, ":") + 1))
+                monitorCounts = 1
+            Else
+                monitorSize2 = Trim(Mid(line, InStr(line, ":") + 1))
+            
+            End If
+        End If
+        
+    Loop
+
+    ' Close the text file
+    Close fileNumber
+
+    ' Enter data in the next available row
+    ws.Cells(lastRow, 1).value = systemName
+    ws.Cells(lastRow, 2).value = systemManufacturer
+    ws.Cells(lastRow, 3).value = systemModel
+    ws.Cells(lastRow, 4).value = user
+    ws.Cells(lastRow, 5).value = monitorBrand1
+    ws.Cells(lastRow, 6).value = monitorSize1
+    ws.Cells(lastRow, 7).value = monitorBrand2
+    ws.Cells(lastRow, 8).value = monitorSize2
+
+    ' Increment the lastRow for the next file
+    lastRow = lastRow + 1
+End Sub
+
+
+
+
+
+''------  ----------------to select from a single txt  file----------- -------------
+
+Sub ProcessTextFileAndFillExcel()
+
+
+'    ' Set the path to the folder containing the text files
+'    Dim folderPath As String
+'    folderPath = "C:\Users\user105\Downloads\TextFiles" ' Replace with the actual path to your folder
+'
+' '----------------------
+'    ' Define the path to your text file
+'    Dim filePath As String
+'    filePath = "C:\Users\user105\Downloads\P-180.txt" ' Replace with the actual path to your text file
+'
+'    ' Open the text file for reading
+'    Dim fileNumber As Integer
+'    fileNumber = FreeFile
+'    Open filePath For Input As fileNumber
+'
+'    ' Variables to store extracted information
+'    Dim systemName As String
+'    Dim systemManufacturer As String
+'    Dim systemModel As String
+'
+'    ' Read each line of the text file
+'    Do Until EOF(fileNumber)
+'        Dim line As String
+'        Line Input #fileNumber, line
+'
+'        ' Check for the specific lines containing information
+'        If InStr(line, "System Name:") > 0 Then
+'            systemName = Trim(Mid(line, InStr(line, ":") + 1))
+'        ElseIf InStr(line, "System Manufacturer:") > 0 Then
+'            systemManufacturer = Trim(Mid(line, InStr(line, ":") + 1))
+'        ElseIf InStr(line, "System Model:") > 0 Then
+'            systemModel = Trim(Mid(line, InStr(line, ":") + 1))
+'        End If
+'    Loop
+'
+'    ' Close the text file
+'    Close fileNumber
+'
+'    ' Fill the corresponding columns in Excel at the end of each row
+'    Dim ws As Worksheet
+'    Set ws = ThisWorkbook.Sheets("Sheet1") ' Replace with the actual sheet name
+'
+'    ' Find the last used row in column A
+'    Dim lastRow As Long
+'    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row + 1
+'
+'' Enter data in the next available row
+'    ws.Cells(lastRow, 1).value = systemName
+'    ws.Cells(lastRow, 2).value = systemManufacturer
+'    ws.Cells(lastRow, 3).value = systemModel
+End Sub
+' -----------------------------------------------------
